@@ -4,6 +4,7 @@ This module allows to find objects and parameters by paths. User associates
 path masks with objects.
  
 Example (see the './examples' folder):
+```JavaScript
     import { PathMapper } from '../';
     let mapper = new PathMapper();
     let projectHandler = function(params){
@@ -26,7 +27,4 @@ Example (see the './examples' folder):
      * - Project Name: FooBar
      * - Project Path: path/to/my/doc.pdf
      */
-     
-    
-    
-    
+```
