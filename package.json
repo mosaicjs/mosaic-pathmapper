@@ -1,6 +1,6 @@
 {
   "name": "mosaic-pathmapper",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Mapping of path masks to objects",
   "main": "index.js",
   "scripts": {
