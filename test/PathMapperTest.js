@@ -72,6 +72,22 @@ describe('PathMapper', function(){
                     obj : 'A'
                 });
     });
+    
+    it('should be able to parse paths with missing fragments', function() {
+        test('/x/*b/y', 'A', '/x//y', {
+            params : {
+                b : null
+            },
+            obj : 'A'
+        });
+        test('/x/*b/*c/y', 'A', '/x///y', {
+            params : {
+                b : null,
+                c : null
+            },
+            obj : 'A'
+        });
+    });
 
     it('should be able to parse multiple paths', function() {
         let mapper = new PathMapper();

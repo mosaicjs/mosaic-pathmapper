@@ -276,11 +276,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        segment = null;
 	                    }
 	                    var value = params[_name];
-	                    if (!value) {
-	                        var msg = 'Required parameter "' + _name + '" not defined.';
-	                        var err = new Error(msg);
-	                        err._code = 400;
-	                        throw err;
+	                    if (typeof value === 'function') {
+	                        value = value();
 	                    }
 	                    delete params[_name];
 	                    path.push(value);
