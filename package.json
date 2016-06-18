@@ -23,8 +23,6 @@
     "url": "https://github.com/mosaicjs/mosaic-pathmapper/issues"
   },
   "devDependencies": {
-    "babel": "^5.8.3",
-    "babel-loader": "^5.3.2",
     "expect.js": "^0.3.1",
     "mocha": "^2.2.5",
     "webpack": "^1.10.1"

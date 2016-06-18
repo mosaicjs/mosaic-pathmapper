@@ -2,7 +2,7 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define(factory);
+		define([], factory);
 	else {
 		var a = factory();
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
@@ -54,20 +54,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
 	module.exports = __webpack_require__(1);
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
 	module.exports = {
-	    PathMapper: __webpack_require__(2),
-	    PathFormatter: __webpack_require__(3)
-	};
+	    PathMapper : __webpack_require__(2),
+	    PathFormatter : __webpack_require__(3)
+	}
+
 
 /***/ },
 /* 2 */
@@ -78,9 +75,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * object matching to the given path. This class is useful to implement call
 	 * routers.
 	 */
-	'use strict';
-
-	function PathMapper() {}
+	function PathMapper() {
+	}
 
 	/**
 	 * Adds a new object to this mapper.
@@ -90,20 +86,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param obj
 	 *            the object to add
 	 */
-	PathMapper.prototype.add = function (mask, obj) {
+	PathMapper.prototype.add = function(mask, obj) {
 	    var chunks = [];
 	    var names = [];
 	    var a = false;
 	    var segments = mask.split('*');
-	    segments.forEach(function (segment) {
+	    segments.forEach(function(segment) {
 	        var b = false;
 	        var array = segment.split(':');
-	        array.forEach(function (str) {
+	        array.forEach(function(str) {
 	            if (!a && !b) {
 	                chunks.push(esc(str));
 	            } else if (a || b) {
 	                var idx = str.indexOf('/');
-	                var r = b ? '[^/]+' : '.*?';
+	                var r = b ? '[^\/]+' : '.*?';
 	                if (idx >= 0) {
 	                    chunks.push(wrap(r));
 	                    names.push(str.substring(0, idx));
@@ -121,12 +117,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var regexp = new RegExp('^' + str + '$');
 	    this._handlers = this._handlers || [];
 	    this._handlers.push({
-	        mask: mask,
-	        regexp: regexp,
-	        names: names,
-	        obj: obj
+	        mask : mask,
+	        regexp : regexp,
+	        names : names,
+	        obj : obj
 	    });
-	};
+	}
 
 	/**
 	 * Finds and returns a nearest object corresponding to the given path. This
@@ -134,39 +130,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * found object 2) The 'params' field contains all found path parameters
 	 * (defined in the initial path mask used to register this object).
 	 */
-	PathMapper.prototype.find = function (path) {
+	PathMapper.prototype.find = function(path) {
 	    var result = null;
 	    this._handlers = this._handlers || [];
 	    for (var i = 0, len = this._handlers.length; !result && i < len; i++) {
 	        var handler = this._handlers[i];
-	        if (!handler.regexp.test(path)) continue;
+	        if (!handler.regexp.test(path))
+	            continue;
 	        var params = {};
 	        var regexp = handler.regexp.exec(path);
 	        var array = regexp.slice(1);
 	        var idx = 0;
-	        array.forEach(function (param) {
+	        array.forEach(function(param) {
 	            var name = handler.names[idx++];
 	            var value = param ? decodeURIComponent(param) : null;
 	            params[name] = value;
 	        });
 	        result = {
-	            params: params,
-	            obj: handler.obj
+	            params : params,
+	            obj : handler.obj
 	        };
 	    }
 	    return result;
-	};
+	}
 
 	/**
 	 * Removes and returns the mapped object corresponding to the specified path
 	 * mask.
 	 */
-	PathMapper.prototype.remove = function (mask) {
+	PathMapper.prototype.remove = function(mask) {
 	    var result = null;
 	    var removed = null;
 	    var handlers = this._handlers || [];
 	    this._handlers = [];
-	    handlers.forEach(function (handler) {
+	    handlers.forEach(function(handler) {
 	        var keep = true;
 	        if (handler.mask === mask) {
 	            removed = handler.obj;
@@ -175,7 +172,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, this);
 	    return removed;
-	};
+	}
 
 	/** Regular expression used to find and replace special symbols. */
 	var escapeRegExp = /[\-{}\[\]+?.,\\\^$|#\s]/g;
@@ -190,6 +187,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = PathMapper;
 
+
 /***/ },
 /* 3 */
 /***/ function(module, exports) {
@@ -198,10 +196,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * A static method used to format a string based on the given path mask and
 	 * specified parameters.
 	 */
-	'use strict';
-
-	function PathMapper() {}
-	PathMapper.formatPath = function (mask, params) {
+	function PathMapper() {
+	}
+	PathMapper.formatPath = function(mask, params) {
 	    params = params || {};
 	    var array = mask.split(/[:\*]/gim);
 	    var path = [];
@@ -233,9 +230,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 	    return path.join('');
-	};
+	}
 
 	module.exports = PathMapper;
+
 
 /***/ }
 /******/ ])

@@ -5,12 +5,6 @@ module.exports = {
         filename : 'index.js',
         libraryTarget : 'umd'
     },
-    module : {
-        loaders : [ {
-            test : /\.jsx?$/,
-            exclude : /node_modules/,
-            loader : 'babel'
-        } ]
-    },
+    module : {},
     externals : []
 };
