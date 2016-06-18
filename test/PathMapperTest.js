@@ -1,14 +1,14 @@
-import expect from 'expect.js';
-import { PathMapper } from '../';
+var expect = require('expect.js');
+var PathMapper = require('../').PathMapper;
 
-describe('PathMapper', function(){
+describe('PathMapper', function() {
     function test(mask, obj, t, result) {
-        let mapper = new PathMapper();
+        var mapper = new PathMapper();
         mapper.add(mask, obj);
-        let r = mapper.find(t);
+        var r = mapper.find(t);
         expect(r).to.eql(result);
     }
-    
+
     it('should be able to successfully extract path parameters', function() {
         test('/:a', 'A', '/x', {
             params : {
@@ -62,17 +62,16 @@ describe('PathMapper', function(){
             },
             obj : 'A'
         });
-        test('/x/*b/y/:c/z/*d', 'A',
-                '/x/this/is/a/path/y/123/z/a/new/path', {
-                    params : {
-                        b : 'this/is/a/path',
-                        c : '123',
-                        d : 'a/new/path'
-                    },
-                    obj : 'A'
-                });
+        test('/x/*b/y/:c/z/*d', 'A', '/x/this/is/a/path/y/123/z/a/new/path', {
+            params : {
+                b : 'this/is/a/path',
+                c : '123',
+                d : 'a/new/path'
+            },
+            obj : 'A'
+        });
     });
-    
+
     it('should be able to parse paths with missing fragments', function() {
         test('/x/*b/y', 'A', '/x//y', {
             params : {
@@ -90,14 +89,14 @@ describe('PathMapper', function(){
     });
 
     it('should be able to parse multiple paths', function() {
-        let mapper = new PathMapper();
+        var mapper = new PathMapper();
         mapper.add('/project/:project/user/:user', 'Project + User');
         mapper.add('/project/:project', 'Project Only');
         mapper.add('/foo-:id', 'FFooBar');
         mapper.add('/:toto/:tata', 'Toto Tata');
         mapper.add('/hello/*world', 'Hello World');
 
-        let obj = mapper.find('/project/hello world/user/toto');
+        var obj = mapper.find('/project/hello world/user/toto');
         expect(obj).to.eql({
             params : {
                 project : 'hello world',
@@ -141,14 +140,14 @@ describe('PathMapper', function(){
     });
 
     it('should be able to add and remove paths', function() {
-        let mapper = new PathMapper();
+        var mapper = new PathMapper();
         mapper.add('/project/:project/user/:user', 'Project + User');
         mapper.add('/project/:project', 'Project Only');
         mapper.add('/foo-:id', 'FFooBar');
         mapper.add('/:toto/:tata', 'Toto Tata');
         mapper.add('/hello/*world', 'Hello World');
 
-        let obj = mapper.find('/hello/myWorld');
+        var obj = mapper.find('/hello/myWorld');
         expect(obj).to.eql({
             params : {
                 toto : 'hello',
@@ -157,7 +156,7 @@ describe('PathMapper', function(){
             obj : 'Toto Tata'
         });
 
-        let removed = mapper.remove('/:toto/:tata');
+        var removed = mapper.remove('/:toto/:tata');
         expect(removed).to.eql('Toto Tata');
 
         obj = mapper.find('/hello/myWorld');
